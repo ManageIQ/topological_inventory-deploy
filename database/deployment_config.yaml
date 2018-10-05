@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: postgresql
+spec:
+  strategy:
+    type: Recreate
+  triggers:
+  - type: ConfigChange
+  replicas: 1
+  selector:
+    name: postgresql
+  template:
+    metadata:
+      name: postgresql
+      labels:
+        name: postgresql
+    spec:
+      volumes:
+      - name: postgresql
+        persistentVolumeClaim:
+          claimName: postgresql
+      containers:
+      - name: postgresql
+        image: docker.io/manageiq/postgresql:latest
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgresql
+          mountPath: "/var/lib/pgsql/data"
+        env:
+        - name: POSTGRESQL_USER
+          value: root
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: database-password
+        - name: POSTGRESQL_DATABASE
+          value: topological_inventory_production
