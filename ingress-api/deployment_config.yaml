@@ -24,7 +24,7 @@ spec:
         - name: QUEUE_HOST
           value: kafka
         - name: QUEUE_PORT
-          value: 9092
+          value: "9092"
   triggers:
     - type: ConfigChange
     - type: ImageChange
