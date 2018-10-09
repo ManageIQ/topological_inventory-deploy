@@ -1,20 +1,20 @@
 apiVersion: v1
 kind: DeploymentConfig
 metadata:
-  name: query-api
+  name: api
 spec:
   replicas: 1
   selector:
-    name: query-api
+    name: api
   template:
     metadata:
-      name: query-api
+      name: api
       labels:
-        name: query-api
+        name: api
     spec:
       containers:
-      - name: query-api
-        image: topological-inventory-ci/query-api:latest
+      - name: api
+        image: topological-inventory-ci/api:latest
         ports:
         - containerPort: 3000
         env:
@@ -34,12 +34,12 @@ spec:
         - name: SECRET_KEY_BASE
           valueFrom:
             secretKeyRef:
-              name: query-api-secrets
+              name: api-secrets
               key: secret-key
         - name: ENCRYPTION_KEY
           valueFrom:
             secretKeyRef:
-              name: query-api-secrets
+              name: api-secrets
               key: encryption-key
         readinessProbe:
           tcpSocket:
@@ -50,7 +50,7 @@ spec:
       imageChangeParams:
         automatic: true
         containerNames:
-          - query-api
+          - api
         from:
           kind: ImageStreamTag
-          name: query-api:latest
+          name: api:latest
