@@ -1,19 +1,19 @@
 apiVersion: v1
 kind: DeploymentConfig
 metadata:
-  name: kafka
+  name: topological-inventory-kafka
 spec:
   replicas: 1
   selector:
-    name: kafka
+    name: topological-inventory-kafka
   template:
     metadata:
-      name: kafka
+      name: topological-inventory-kafka
       labels:
-        name: kafka
+        name: topological-inventory-kafka
     spec:
       containers:
-      - name: kafka
+      - name: topological-inventory-kafka
         image: carbonin/kafka:latest
         command:
         - bin/kafka-server-start.sh
@@ -27,7 +27,7 @@ spec:
         - log.retention.bytes=10485760
         volumeMounts:
         - mountPath: /tmp/kafka-logs
-          name: kafka-logs
+          name: topological-inventory-kafka-logs
         ports:
         - containerPort: 9092
       - name: zookeeper
@@ -38,11 +38,11 @@ spec:
         - config/zookeeper.properties
         volumeMounts:
         - mountPath: /tmp/zookeeper
-          name: zookeeper
+          name: topological-inventory-zookeeper
         ports:
         - containerPort: 2181
       volumes:
-      - name: kafka-logs
+      - name: topological-inventory-kafka-logs
         emptyDir: {}
-      - name: zookeeper
+      - name: topological-inventory-zookeeper
         emptyDir: {}

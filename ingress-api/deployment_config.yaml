@@ -1,20 +1,20 @@
 apiVersion: v1
 kind: DeploymentConfig
 metadata:
-  name: ingress-api
+  name: topological-inventory-ingress-api
 spec:
   replicas: 1
   selector:
-    name: ingress-api
+    name: topological-inventory-ingress-api
   template:
     metadata:
-      name: ingress-api
+      name: topological-inventory-ingress-api
       labels:
-        name: ingress-api
+        name: topological-inventory-ingress-api
     spec:
       containers:
-      - name: ingress-api
-        image: topological-inventory-ci/ingress-api:latest
+      - name: topological-inventory-ingress-api
+        image: topological-inventory-ci/topological-inventory-ingress-api:latest
         ports:
         - containerPort: 4567
         readinessProbe:
@@ -22,7 +22,7 @@ spec:
             port: 4567
         env:
         - name: QUEUE_HOST
-          value: kafka
+          value: topological-inventory-kafka
         - name: QUEUE_PORT
           value: "9092"
   triggers:
@@ -31,7 +31,7 @@ spec:
       imageChangeParams:
         automatic: true
         containerNames:
-          - ingress-api
+          - topological-inventory-ingress-api
         from:
           kind: ImageStreamTag
-          name: ingress-api:latest
+          name: topological-inventory-ingress-api:latest

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: DeploymentConfig
 metadata:
-  name: postgresql
+  name: topological-inventory-postgresql
 spec:
   strategy:
     type: Recreate
@@ -9,24 +9,24 @@ spec:
   - type: ConfigChange
   replicas: 1
   selector:
-    name: postgresql
+    name: topological-inventory-postgresql
   template:
     metadata:
-      name: postgresql
+      name: topological-inventory-postgresql
       labels:
-        name: postgresql
+        name: topological-inventory-postgresql
     spec:
       volumes:
-      - name: postgresql
+      - name: topological-inventory-postgresql
         persistentVolumeClaim:
-          claimName: postgresql
+          claimName: topological-inventory-postgresql
       containers:
-      - name: postgresql
+      - name: topological-inventory-postgresql
         image: docker.io/manageiq/postgresql:latest
         ports:
         - containerPort: 5432
         volumeMounts:
-        - name: postgresql
+        - name: topological-inventory-postgresql
           mountPath: "/var/lib/pgsql/data"
         env:
         - name: POSTGRESQL_USER

@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgresql
+  name: topological-inventory-postgresql
 spec:
   ports:
-  - name: postgresql
+  - name: topological-inventory-postgresql
     port: 5432
     targetPort: 5432
   selector:
-    name: postgresql
+    name: topological-inventory-postgresql

@@ -1,20 +1,20 @@
 apiVersion: v1
 kind: DeploymentConfig
 metadata:
-  name: api
+  name: topological-inventory-api
 spec:
   replicas: 1
   selector:
-    name: api
+    name: topological-inventory-api
   template:
     metadata:
-      name: api
+      name: topological-inventory-api
       labels:
-        name: api
+        name: topological-inventory-api
     spec:
       containers:
-      - name: api
-        image: topological-inventory-ci/api:latest
+      - name: topological-inventory-api
+        image: topological-inventory-ci/topological-inventory-api:latest
         ports:
         - containerPort: 3000
         env:
@@ -23,23 +23,23 @@ spec:
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: database-secrets
+              name: topological-inventory-database-secrets
               key: database-password
         - name: DATABASE_NAME
           value: topological_inventory_production
         - name: DATABASE_HOST
-          value: postgresql
+          value: topological-inventory-postgresql
         - name: DATABASE_PORT
           value: "5432"
         - name: SECRET_KEY_BASE
           valueFrom:
             secretKeyRef:
-              name: api-secrets
+              name: topological-inventory-api-secrets
               key: secret-key
         - name: ENCRYPTION_KEY
           valueFrom:
             secretKeyRef:
-              name: api-secrets
+              name: topological-inventory-api-secrets
               key: encryption-key
         readinessProbe:
           tcpSocket:
@@ -50,7 +50,7 @@ spec:
       imageChangeParams:
         automatic: true
         containerNames:
-          - api
+          - topological-inventory-api
         from:
           kind: ImageStreamTag
-          name: api:latest
+          name: topological-inventory-api:latest
