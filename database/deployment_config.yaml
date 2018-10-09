@@ -34,7 +34,7 @@ spec:
         - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: database-secrets
+              name: topological-inventory-database-secrets
               key: database-password
         - name: POSTGRESQL_DATABASE
           value: topological_inventory_production
