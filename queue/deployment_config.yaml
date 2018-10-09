@@ -20,7 +20,7 @@ spec:
         args:
         - config/server.properties
         - --override
-        - advertised.host.name=kafka
+        - advertised.host.name=topological-inventory-kafka
         - --override
         - log.segment.bytes=10485760
         - --override
@@ -30,7 +30,7 @@ spec:
           name: topological-inventory-kafka-logs
         ports:
         - containerPort: 9092
-      - name: zookeeper
+      - name: topological-inventory-zookeeper
         image: carbonin/kafka:latest
         command:
         - bin/zookeeper-server-start.sh
