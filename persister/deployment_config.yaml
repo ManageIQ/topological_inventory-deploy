@@ -32,7 +32,7 @@ spec:
         - name: ENCRYPTION_KEY
           valueFrom:
             secretKeyRef:
-              name: topological-inventory-query-api-secrets
+              name: topological-inventory-api-secrets
               key: encryption-key
         - name: QUEUE_HOST
           value: topological-inventory-kafka
