@@ -2,6 +2,8 @@ apiVersion: v1
 kind: DeploymentConfig
 metadata:
   name: topological-inventory-postgresql
+  labels:
+    app: topological-inventory
 spec:
   strategy:
     type: Recreate
@@ -15,6 +17,7 @@ spec:
       name: topological-inventory-postgresql
       labels:
         name: topological-inventory-postgresql
+        app: topological-inventory
     spec:
       volumes:
       - name: topological-inventory-postgresql
