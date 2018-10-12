@@ -2,6 +2,8 @@ apiVersion: v1
 kind: DeploymentConfig
 metadata:
   name: topological-inventory-kafka
+  labels:
+    app: topological-inventory
 spec:
   replicas: 1
   selector:
@@ -11,6 +13,7 @@ spec:
       name: topological-inventory-kafka
       labels:
         name: topological-inventory-kafka
+        app: topological-inventory
     spec:
       containers:
       - name: topological-inventory-kafka
