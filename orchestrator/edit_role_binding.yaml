@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: RoleBinding
+metadata:
+  name: edit
+roleRef:
+  name: edit
+subjects:
+- kind: ServiceAccount
+  name: topological-inventory-orchestrator

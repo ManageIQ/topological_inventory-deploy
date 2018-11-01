@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: topological-inventory-collector-openshift
+  labels:
+    app: topological-inventory
+spec:
+  replicas: 1
+  selector:
+    name: topological-inventory-collector-openshift
+  template:
+    metadata:
+      name: topological-inventory-collector-openshift
+      labels:
+        name: topological-inventory-collector-openshift
+        app: topological-inventory
+    spec:
+      containers:
+      - name: topological-inventory-collector-openshift
+        image: topological-inventory-ci/topological-inventory-collector-openshift:latest
+        env:
+        - name: INGRESS_API
+          value: http://topological-inventory-ingress-api:4567
+        - name: SOURCE_UID
+          value: 29e1facc-c769-48d2-914f-c6682314cf54
+        - name: OPENSHIFT_HOSTNAME
+          value: dell-r430-19.cloudforms.lab.eng.rdu2.redhat.com
+        - name: OPENSHIFT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: topological-inventory-collector-openshift-secrets
+              key: openshift-token
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - topological-inventory-collector-openshift
+        from:
+          kind: ImageStreamTag
+          name: topological-inventory-collector-openshift:latest
