@@ -19,11 +19,34 @@ spec:
       - name: topological-inventory-ingress-api
         image: topological-inventory-ci/topological-inventory-ingress-api:latest
         ports:
-        - containerPort: 4567
+        - containerPort: 3000
         readinessProbe:
           tcpSocket:
-            port: 4567
+            port: 3000
         env:
+        - name: DATABASE_USER
+          value: root
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: topological-inventory-database-secrets
+              key: database-password
+        - name: DATABASE_NAME
+          value: topological_inventory_production
+        - name: DATABASE_HOST
+          value: topological-inventory-postgresql
+        - name: DATABASE_PORT
+          value: "5432"
+        - name: SECRET_KEY_BASE
+          valueFrom:
+            secretKeyRef:
+              name: topological-inventory-api-secrets
+              key: secret-key
+        - name: ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: topological-inventory-api-secrets
+              key: encryption-key
         - name: QUEUE_HOST
           value: topological-inventory-kafka
         - name: QUEUE_PORT
