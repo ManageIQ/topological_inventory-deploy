@@ -7,7 +7,7 @@ metadata:
 spec:
   ports:
   - name: topological-inventory-ingress-api
-    port: 4567
-    targetPort: 4567
+    port: 3000
+    targetPort: 3000
   selector:
     name: topological-inventory-ingress-api
