@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: topological-inventory-api
-        image: topological-inventory-ci/topological-inventory-api:latest
+        image: buildfactory/topological-inventory-api:latest
         ports:
         - containerPort: 3000
         env:
@@ -56,4 +56,4 @@ spec:
           - topological-inventory-api
         from:
           kind: ImageStreamTag
-          name: topological-inventory-api:latest
+          name: buildfactory/topological-inventory-api:latest
