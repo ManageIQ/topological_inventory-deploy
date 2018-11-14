@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: topological-inventory-persister-build-config
+metadata:
+  name: topological-inventory-persister-build-config
+objects:
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    name: topological-inventory-persister
+  spec:
+    source:
+      type: Git
+      git:
+        uri: git://github.com/ManageIQ/topological_inventory-core
+        ref: master
+    strategy:
+      type: Docker
+    output:
+      to:
+        kind: ImageStreamTag
+        name: topological-inventory-persister:latest
+        namespace: ${IMAGE_NAMESPACE}
+parameters:
+- name: IMAGE_NAMESPACE
+  displayName: Image Namespace
+  description: Namespace to push the resulting image stream tag to
+  value: buildfactory
