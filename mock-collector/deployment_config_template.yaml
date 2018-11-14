@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: topological-inventory-mock-collector
+metadata:
+  name: topological-inventory-mock-collector
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: topological-inventory-mock-collector
+    labels:
+      app: topological-inventory
+  spec:
+    replicas: 1
+    selector:
+      name: topological-inventory-mock-collector
+    template:
+      metadata:
+        name: topological-inventory-mock-collector
+        labels:
+          name: topological-inventory-mock-collector
+          app: topological-inventory
+      spec:
+        containers:
+        - name: topological-inventory-mock-collector
+          image: topological-inventory-ci/topological-inventory-mock-collector:latest
+          env:
+          - name: CONFIG
+            value: ${CONFIG_NAME}
+          - name: INGRESS_API
+            value: http://${INGRESS_SERVICE_HOST}:${INGRESS_SERVICE_PORT}
+          - name: SOURCE_UID
+            value: ${SOURCE_UID}
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - topological-inventory-mock-collector
+          from:
+            kind: ImageStreamTag
+            name: topological-inventory-mock-collector:latest
+parameters:
+- name: CONFIG_NAME
+  displayName: Config File Name
+  required: true
+  description: Config File to use for the mock collector
+  value: default
+- name: INGRESS_SERVICE_HOST
+  displayName: Ingress Service Host
+  required: true
+  description: Hostname of the ingress service
+  value: topological-inventory-ingress-api
+- name: INGRESS_SERVICE_PORT
+  displayName: Ingress Service Port
+  required: true
+  description: Port to access on the Ingress Service Host
+  value: "3000"
+- name: SOURCE_UID
+  displayName: Source UID
+  required: true
+  description: Source to collect data from
