@@ -22,8 +22,17 @@ objects:
         kind: ImageStreamTag
         name: topological-inventory-ingress-api:latest
         namespace: ${IMAGE_NAMESPACE}
+    triggers:
+    - type: GitHub
+      github:
+        secret: ${GITHUB_WEBHOOK_SECRET}
 parameters:
 - name: IMAGE_NAMESPACE
   displayName: Image Namespace
   description: Namespace to push the resulting image stream tag to
   value: buildfactory
+- name: GITHUB_WEBHOOK_SECRET
+  displayName: GitHub Webhook Secret
+  description: Github trigger secret.  A difficult to guess string encoded as part of the webhook URL.  Not encrypted.
+  generate: expression
+  from: "[a-zA-Z0-9]{40}"
