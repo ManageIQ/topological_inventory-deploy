@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: topological-inventory-persister
+spec:
+  tags:
+  - name: latest
+
