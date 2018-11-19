@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: topological-inventory-persister-build-config
+  template: topological-inventory-api-build
 metadata:
-  name: topological-inventory-persister-build-config
+  name: topological-inventory-api-build
 objects:
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    name: topological-inventory-persister
+    name: topological-inventory-api
   spec:
     source:
       type: Git
@@ -20,12 +20,19 @@ objects:
     output:
       to:
         kind: ImageStreamTag
-        name: topological-inventory-persister:latest
+        name: topological-inventory-api:latest
         namespace: ${IMAGE_NAMESPACE}
     triggers:
     - type: GitHub
       github:
         secret: ${GITHUB_WEBHOOK_SECRET}
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: topological-inventory-api
+  spec:
+    tags:
+    - name: latest
 parameters:
 - name: IMAGE_NAMESPACE
   displayName: Image Namespace
@@ -40,7 +47,7 @@ parameters:
   description: The URL of the repository with your application source code.
   displayName: Git repository URI
   required: true
-  value: https://github.com/ManageIQ/topological_inventory-core
+  value: https://github.com/ManageIQ/topological_inventory-api
 - name: SOURCE_REPOSITORY_REF
   description: Git repository branch to check out, if different from default
   displayName: Git Reference
