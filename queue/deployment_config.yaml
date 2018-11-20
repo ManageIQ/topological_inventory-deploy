@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: topological-inventory-kafka
-        image: carbonin/kafka:latest
+        image: manageiq/kafka:latest
         command:
         - bin/kafka-server-start.sh
         args:
@@ -34,7 +34,7 @@ spec:
         ports:
         - containerPort: 9092
       - name: topological-inventory-zookeeper
-        image: carbonin/kafka:latest
+        image: manageiq/kafka:latest
         command:
         - bin/zookeeper-server-start.sh
         args:
