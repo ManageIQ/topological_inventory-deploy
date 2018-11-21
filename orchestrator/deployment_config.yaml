@@ -19,6 +19,8 @@ spec:
       - name: topological-inventory-orchestrator
         image: topological-inventory-ci/topological-inventory-orchestrator:latest
         env:
+        - name: API_URL
+          value: http://topological-inventory-api:3000/api/v0
         - name: DATABASE_USER
           value: root
         - name: DATABASE_PASSWORD
@@ -37,8 +39,6 @@ spec:
             secretKeyRef:
               name: topological-inventory-api-secrets
               key: encryption-key
-        - name: API_URL
-          value: https://topological-inventory-api:3000
         - name: INGRESS_API_URL
           value: http://topological-inventory-ingress-api:4567
         - name: MY_NAMESPACE
