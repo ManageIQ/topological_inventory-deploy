@@ -1,9 +1,7 @@
 apiVersion: v1
 kind: Template
-labels:
-  template: topological-inventory-persister-deployment-config
 metadata:
-  name: topological-inventory-persister-deployment-config
+  name: topological-inventory-persister
 objects:
 - apiVersion: v1
   kind: DeploymentConfig
