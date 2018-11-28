@@ -66,7 +66,7 @@ objects:
                 name: topological-inventory-api-secrets
                 key: encryption-key
           - name: QUEUE_HOST
-            value: topological-inventory-kafka
+            value: ${QUEUE_HOST}
           - name: QUEUE_PORT
             value: "9092"
     triggers:
@@ -85,3 +85,7 @@ parameters:
   displayName: Image Namespace
   description: Namespace which contains the image stream to pull from
   value: buildfactory
+- name: QUEUE_HOST
+  displayName: Message Queue Hostname
+  description: Hostname which will be used to contact the message queue.
+  required: true
