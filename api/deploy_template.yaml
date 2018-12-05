@@ -39,6 +39,8 @@ objects:
           ports:
           - containerPort: 3000
           env:
+          - name: APP_NAME
+            value: ${APP_NAME}
           - name: DATABASE_USER
             value: root
           - name: DATABASE_PASSWORD
@@ -52,6 +54,8 @@ objects:
             value: topological-inventory-postgresql
           - name: DATABASE_PORT
             value: "5432"
+          - name: PATH_PREFIX
+            value: ${PATH_PREFIX}
           - name: SECRET_KEY_BASE
             valueFrom:
               secretKeyRef:
@@ -77,7 +81,14 @@ objects:
             name: topological-inventory-api:latest
             namespace: ${IMAGE_NAMESPACE}
 parameters:
+- name: APP_NAME
+  displayName: Application Name
+  description: Application name to be used in request paths. Only used when PATH_PREFIX is also specified.
+  value: topological-inventory
 - name: IMAGE_NAMESPACE
   displayName: Image Namespace
   description: Namespace which contains the image stream to pull from
   value: buildfactory
+- name: PATH_PREFIX
+  displayName: Path Prefix
+  description: Base path for the API
