@@ -41,19 +41,15 @@ objects:
           env:
           - name: APP_NAME
             value: ${APP_NAME}
-          - name: DATABASE_USER
-            value: root
-          - name: DATABASE_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: topological-inventory-database-secrets
-                key: database-password
-          - name: DATABASE_NAME
-            value: topological_inventory_production
           - name: DATABASE_HOST
             value: topological-inventory-postgresql
           - name: DATABASE_PORT
             value: "5432"
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: topological-inventory-database-secrets
+                key: database-url
           - name: PATH_PREFIX
             value: ${PATH_PREFIX}
           - name: SECRET_KEY_BASE
