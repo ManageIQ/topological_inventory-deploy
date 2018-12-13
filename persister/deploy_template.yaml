@@ -23,6 +23,9 @@ objects:
         containers:
         - name: topological-inventory-persister
           image: ${IMAGE_NAMESPACE}/topological-inventory-persister:latest
+          resources:
+            limits:
+              memory: 500Mi
           env:
           - name: DATABASE_HOST
             value: topological-inventory-postgresql
