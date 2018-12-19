@@ -16,6 +16,8 @@ objects:
         uri: ${SOURCE_REPOSITORY_URL}
         ref: ${SOURCE_REPOSITORY_REF}
     strategy:
+      dockerStrategy:
+        noCache: true
       type: Docker
     output:
       to:
