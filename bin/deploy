@@ -5,10 +5,8 @@ param_file=$1
 
 function apply_template() {
   local template=$1
-  echo "oc process -f $template --param-file=$param_file --ignore-unknown-parameters | oc apply -f -"
+  oc process -f $template --param-file=$param_file --ignore-unknown-parameters | oc apply -f -
 }
-
-# Secrets
 
 function secret_missing() {
   oc get secrets -o=name | grep -q "$1"
@@ -24,18 +22,17 @@ function api_secrets_provided() {
 }
 
 # For us to safely create the secret we need to have either provided a password
-# or not have created the secret yet this ensures we don't overwrite the existing
-# password with a newly generated one
+# or not have created the secret yet. This ensures we don't overwrite the existing
+# password with a newly generated one.
 (database_password_provided || secret_missing "topological-inventory-database-secrets") && apply_template "database/secret_template.yaml"
 (api_secrets_provided || secret_missing "topological-inventory-api-secrets") && apply_template "api/secret_template.yaml"
 
 # database
-echo "oc apply -f database/pvc.yaml"
-echo "oc apply -f database/service.yaml"
-echo "oc apply -f database/deployment_config.yaml"
+oc apply -f database/pvc.yaml
+oc apply -f database/service.yaml
+oc apply -f database/deployment_config.yaml
 
 # Deployment Configs
 apply_template "api/deploy_template.yaml"
 apply_template "ingress-api/deploy_template.yaml"
 apply_template "persister/deploy_template.yaml"
-
