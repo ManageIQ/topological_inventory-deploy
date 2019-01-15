@@ -2,6 +2,6 @@
 
 oc delete all -l app=topological-inventory
 
-oc get pvc -o name |xargs oc delete
+oc delete pvc topological-inventory-postgresql
 
 oc delete secret -l app=topological-inventory
