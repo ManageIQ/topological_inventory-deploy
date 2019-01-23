@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: topological-inventory-openshift-collector
+metadata:
+  name: topological-inventory-openshift-collector
+objects:
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    name: topological-inventory-openshift-collector-secrets
+    labels:
+      app: topological-inventory
+  stringData:
+    openshift-token: ${OPENSHIFT_TOKEN}
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: topological-inventory-openshift-collector
+    labels:
+      app: topological-inventory
+  spec:
+    replicas: 1
+    selector:
+      name: topological-inventory-openshift-collector
+    template:
+      metadata:
+        name: topological-inventory-openshift-collector
+        labels:
+          name: topological-inventory-openshift-collector
+          app: topological-inventory
+      spec:
+        containers:
+        - name: topological-inventory-openshift-collector
+          image: ${IMAGE_NAMESPACE}/topological-inventory-openshift-collector:latest
+          env:
+          - name: INGRESS_API
+            value: http://${INGRESS_SERVICE_HOST}:${INGRESS_SERVICE_PORT}
+          - name: OPENSHIFT_HOSTNAME
+            value: ${OPENSHIFT_HOSTNAME}
+          - name: OPENSHIFT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: topological-inventory-openshift-collector-secrets
+                key: openshift-token
+          - name: SOURCE_UID
+            value: ${SOURCE_UID}
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - topological-inventory-openshift-collector
+          from:
+            kind: ImageStreamTag
+            name: topological-inventory-openshift-collector:latest
+            namespace: ${IMAGE_NAMESPACE}
+parameters:
+- name: IMAGE_NAMESPACE
+  displayName: Image Namespace
+  description: Namespace which contains the image stream to pull from
+  value: buildfactory
+- name: INGRESS_SERVICE_HOST
+  displayName: Ingress Service Host
+  required: true
+  description: Hostname of the ingress service
+  value: topological-inventory-ingress-api
+- name: INGRESS_SERVICE_PORT
+  displayName: Ingress Service Port
+  required: true
+  description: Port to access on the Ingress Service Host
+  value: "3000"
+- name: OPENSHIFT_HOSTNAME
+  displayName: OpenShift Cluster Host
+  required: true
+  description: Hostname to access for collecting data
+- name: OPENSHIFT_TOKEN
+  displayName: OpenShift Cluster Token
+  required: true
+  description: Token to use to authenticate to the OpenShift Host
+- name: SOURCE_UID
+  displayName: Source UID
+  required: true
+  description: Source to collect data from
