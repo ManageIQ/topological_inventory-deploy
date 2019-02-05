@@ -38,6 +38,8 @@ objects:
             value: http://${INGRESS_SERVICE_HOST}:${INGRESS_SERVICE_PORT}
           - name: OPENSHIFT_HOSTNAME
             value: ${OPENSHIFT_HOSTNAME}
+          - name: OPENSHIFT_PORT
+            value: ${OPENSHIFT_PORT}
           - name: OPENSHIFT_TOKEN
             valueFrom:
               secretKeyRef:
@@ -75,6 +77,11 @@ parameters:
   displayName: OpenShift Cluster Host
   required: true
   description: Hostname to access for collecting data
+- name: OPENSHIFT_PORT
+  displayName: OpenShift Cluster Port
+  required: true
+  description: Port to access for collecting data
+  default: "8443"
 - name: OPENSHIFT_TOKEN
   displayName: OpenShift Cluster Token
   required: true
