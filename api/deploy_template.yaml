@@ -66,6 +66,10 @@ objects:
               secretKeyRef:
                 name: topological-inventory-api-secrets
                 key: encryption-key
+          - name: QUEUE_HOST
+            value: ${QUEUE_HOST}
+          - name: QUEUE_PORT
+            value: "9092"
           readinessProbe:
             tcpSocket:
               port: 3000
@@ -95,3 +99,7 @@ parameters:
 - name: PATH_PREFIX
   displayName: Path Prefix
   description: Base path for the API
+- name: QUEUE_HOST
+  displayName: Message Queue Hostname
+  description: Hostname which will be used to contact the message queue.
+  required: true
