@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: topological-inventory-openshift-collector-build
+  template: topological-inventory-openshift-build
 metadata:
-  name: topological-inventory-openshift-collector-build
+  name: topological-inventory-openshift-build
 objects:
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    name: topological-inventory-openshift-collector
+    name: topological-inventory-openshift
   spec:
     source:
       type: Git
@@ -23,7 +23,7 @@ objects:
     output:
       to:
         kind: ImageStreamTag
-        name: topological-inventory-openshift-collector:latest
+        name: topological-inventory-openshift:latest
         namespace: ${IMAGE_NAMESPACE}
     triggers:
     - type: GitHub
@@ -32,7 +32,7 @@ objects:
 - apiVersion: v1
   kind: ImageStream
   metadata:
-    name: topological-inventory-openshift-collector
+    name: topological-inventory-openshift
   spec:
     tags:
     - name: latest
