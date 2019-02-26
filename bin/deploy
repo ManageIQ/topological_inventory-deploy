@@ -36,3 +36,4 @@ oc apply -f database/deployment_config.yaml
 apply_template "api/deploy_template.yaml"
 apply_template "ingress-api/deploy_template.yaml"
 apply_template "persister/deploy_template.yaml"
+apply_Template "openshift-operations/deploy_template.yaml"

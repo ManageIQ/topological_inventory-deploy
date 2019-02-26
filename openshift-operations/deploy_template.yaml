@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: topological-inventory-openshift-operations
+metadata:
+  name: topological-inventory-openshift-operations
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: topological-inventory-openshift-operations
+    labels:
+      app: topological-inventory
+  spec:
+    replicas: 1
+    selector:
+      name: topological-inventory-openshift-operations
+    template:
+      metadata:
+        name: topological-inventory-openshift-operations
+        labels:
+          name: topological-inventory-openshift-operations
+          app: topological-inventory
+      spec:
+        containers:
+        - name: topological-inventory-openshift-operations
+          image: ${IMAGE_NAMESPACE}/topological-inventory-openshift:latest
+          command:
+          - bin/openshift-operations
+          env:
+          - name: QUEUE_HOST
+            value: ${QUEUE_HOST}
+          - name: QUEUE_PORT
+            value: "9092"
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - topological-inventory-openshift-operations
+          from:
+            kind: ImageStreamTag
+            name: topological-inventory-openshift:latest
+            namespace: ${IMAGE_NAMESPACE}
+parameters:
+- name: IMAGE_NAMESPACE
+  displayName: Image Namespace
+  description: Namespace which contains the image stream to pull from
+  value: buildfactory
+- name: QUEUE_HOST
+  displayName: Message Queue Hostname
+  description: Hostname which will be used to contact the message queue.
+  required: true

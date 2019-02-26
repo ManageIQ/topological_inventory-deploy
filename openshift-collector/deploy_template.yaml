@@ -32,7 +32,7 @@ objects:
       spec:
         containers:
         - name: topological-inventory-openshift-collector-${SOURCE_ID}
-          image: ${IMAGE_NAMESPACE}/topological-inventory-openshift-collector:latest
+          image: ${IMAGE_NAMESPACE}/topological-inventory-openshift:latest
           env:
           - name: INGRESS_API
             value: http://${INGRESS_SERVICE_HOST}:${INGRESS_SERVICE_PORT}
@@ -56,7 +56,7 @@ objects:
             - topological-inventory-openshift-collector-${SOURCE_ID}
           from:
             kind: ImageStreamTag
-            name: topological-inventory-openshift-collector:latest
+            name: topological-inventory-openshift:latest
             namespace: ${IMAGE_NAMESPACE}
 parameters:
 - name: IMAGE_NAMESPACE

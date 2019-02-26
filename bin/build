@@ -19,5 +19,5 @@ oc start-build topological-inventory-amazon-collector
 oc start-build topological-inventory-api
 oc start-build topological-inventory-ingress-api
 oc start-build topological-inventory-mock-collector
-oc start-build topological-inventory-openshift-collector
+oc start-build topological-inventory-openshift
 oc start-build topological-inventory-persister
