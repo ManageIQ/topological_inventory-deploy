@@ -19,6 +19,8 @@ objects:
       limits:
         memory: 1Gi
     strategy:
+      dockerStrategy:
+        noCache: true
       type: Docker
     output:
       to:
