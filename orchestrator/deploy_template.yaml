@@ -24,6 +24,10 @@ objects:
         - name: topological-inventory-orchestrator
           image: ${IMAGE_NAMESPACE}/topological-inventory-orchestrator:latest
           env:
+          - name: APP_NAME
+            value: ${APP_NAME}
+          - name: IMAGE_NAMESPACE
+            value: ${IMAGE_NAMESPACE}
           - name: PATH_PREFIX
             value: ${PATH_PREFIX}
           - name: MY_NAMESPACE
