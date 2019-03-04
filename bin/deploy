@@ -32,6 +32,9 @@ oc apply -f database/pvc.yaml
 oc apply -f database/service.yaml
 oc apply -f database/deployment_config.yaml
 
+# Orchestrator RBAC
+oc apply -f orchestrator/rbac.yaml
+
 # Deployment Configs
 apply_template "api/deploy_template.yaml"
 apply_template "ingress-api/deploy_template.yaml"
