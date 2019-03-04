@@ -14,6 +14,7 @@ apply_template "ingress-api/build_template.yaml"
 apply_template "mock-collector/build_template.yaml"
 apply_template "openshift-collector/build_template.yaml"
 apply_template "persister/build_template.yaml"
+apply_template "orchestrator/build_template.yaml"
 
 oc start-build topological-inventory-amazon-collector
 oc start-build topological-inventory-api
@@ -21,3 +22,4 @@ oc start-build topological-inventory-ingress-api
 oc start-build topological-inventory-mock-collector
 oc start-build topological-inventory-openshift
 oc start-build topological-inventory-persister
+oc start-build topological-inventory-orchestrator
