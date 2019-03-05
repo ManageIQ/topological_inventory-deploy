@@ -39,7 +39,7 @@ objects:
               cpu: 100m
               memory: 200Mi
             requests:
-              cpu: 25m
+              cpu: 100m
               memory: 100Mi
         serviceAccountName: topological-inventory-orchestrator
     triggers:
