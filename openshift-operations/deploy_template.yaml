@@ -32,6 +32,13 @@ objects:
             value: ${QUEUE_HOST}
           - name: QUEUE_PORT
             value: "9092"
+          resources:
+            limits:
+              cpu: 200m
+              memory: 200Mi
+            requests:
+              cpu: 50m
+              memory: 100Mi
     triggers:
       - type: ConfigChange
       - type: ImageChange

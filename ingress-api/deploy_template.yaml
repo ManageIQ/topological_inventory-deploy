@@ -71,6 +71,10 @@ objects:
             value: "9092"
           resources:
             limits:
+              cpu: 200m
+              memory: 1Gi
+            requests:
+              cpu: 50m
               memory: 500Mi
     triggers:
       - type: ConfigChange

@@ -41,3 +41,10 @@ spec:
               key: database-password
         - name: POSTGRESQL_DATABASE
           value: topological_inventory_production
+        resources:
+          limits:
+            cpu: 200m
+            memory: 500Mi
+          requests:
+            cpu: 50m
+            memory: 200Mi
