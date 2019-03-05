@@ -47,7 +47,7 @@ objects:
               cpu: 200m
               memory: 1Gi
             requests:
-              cpu: 50m
+              cpu: 100m
               memory: 500Mi
     triggers:
       - type: ConfigChange
