@@ -46,25 +46,11 @@ objects:
             tcpSocket:
               port: 3000
           env:
-          - name: DATABASE_HOST
-            value: topological-inventory-postgresql
-          - name: DATABASE_PORT
-            value: "5432"
-          - name: DATABASE_URL
-            valueFrom:
-              secretKeyRef:
-                name: topological-inventory-database-secrets
-                key: database-url
           - name: SECRET_KEY_BASE
             valueFrom:
               secretKeyRef:
                 name: topological-inventory-api-secrets
                 key: secret-key
-          - name: ENCRYPTION_KEY
-            valueFrom:
-              secretKeyRef:
-                name: topological-inventory-api-secrets
-                key: encryption-key
           - name: QUEUE_HOST
             value: ${QUEUE_HOST}
           - name: QUEUE_PORT
