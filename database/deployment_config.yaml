@@ -33,12 +33,15 @@ spec:
           mountPath: "/var/lib/pgsql/data"
         env:
         - name: POSTGRESQL_USER
-          value: root
+          valueFrom:
+            secretKeyRef:
+              name: topological-inventory-db
+              key: username
         - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: topological-inventory-database-secrets
-              key: database-password
+              name: topological-inventory-db
+              key: password
         - name: POSTGRESQL_DATABASE
           value: topological_inventory_production
         resources:
