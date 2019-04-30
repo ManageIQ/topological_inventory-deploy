@@ -1,30 +1,30 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: topological-inventory-mock-collector
+  template: topological-inventory-mock-source
 metadata:
-  name: topological-inventory-mock-collector
+  name: topological-inventory-mock-source
 objects:
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
-    name: topological-inventory-mock-collector
+    name: topological-inventory-mock-source
     labels:
       app: topological-inventory
   spec:
     replicas: 1
     selector:
-      name: topological-inventory-mock-collector
+      name: topological-inventory-mock-source
     template:
       metadata:
-        name: topological-inventory-mock-collector
+        name: topological-inventory-mock-source
         labels:
-          name: topological-inventory-mock-collector
+          name: topological-inventory-mock-source
           app: topological-inventory
       spec:
         containers:
-        - name: topological-inventory-mock-collector
-          image: ${IMAGE_NAMESPACE}/topological-inventory-mock-collector:latest
+        - name: topological-inventory-mock-source
+          image: ${IMAGE_NAMESPACE}/topological-inventory-mock-source:latest
           env:
           - name: CONFIG
             value: ${CONFIG_NAME}
@@ -32,18 +32,18 @@ objects:
             value: http://${INGRESS_SERVICE_HOST}:${INGRESS_SERVICE_PORT}
           - name: SOURCE_UID
             value: ${SOURCE_UID}
-          - name: AMOUNTS
-            value: ${AMOUNTS_CONFIG_NAME}
+          - name: DATA
+            value: ${DATA_CONFIG_NAME}
     triggers:
       - type: ConfigChange
       - type: ImageChange
         imageChangeParams:
           automatic: true
           containerNames:
-            - topological-inventory-mock-collector
+            - topological-inventory-mock-source
           from:
             kind: ImageStreamTag
-            name: topological-inventory-mock-collector:latest
+            name: topological-inventory-mock-source:latest
             namespace: ${IMAGE_NAMESPACE}
 parameters:
 - name: CONFIG_NAME
@@ -51,8 +51,8 @@ parameters:
   required: true
   description: Config File to use for the mock collector
   value: default
-- name: AMOUNTS_CONFIG_NAME
-  displayName: Amounts config file name
+- name: DATA_CONFIG_NAME
+  displayName: Data config file name
   required: true
   description: Config file with requested amounts of data
   value: default

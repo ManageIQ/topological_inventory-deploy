@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: topological-inventory-mock-collector-build
+  template: topological-inventory-mock-source-build
 metadata:
-  name: topological-inventory-mock-collector-build
+  name: topological-inventory-mock-source-build
 objects:
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    name: topological-inventory-mock-collector
+    name: topological-inventory-mock-source
   spec:
     source:
       type: Git
@@ -23,7 +23,7 @@ objects:
     output:
       to:
         kind: ImageStreamTag
-        name: topological-inventory-mock-collector:latest
+        name: topological-inventory-mock-source:latest
         namespace: ${IMAGE_NAMESPACE}
     triggers:
     - type: GitHub
@@ -32,7 +32,7 @@ objects:
 - apiVersion: v1
   kind: ImageStream
   metadata:
-    name: topological-inventory-mock-collector
+    name: topological-inventory-mock-source
   spec:
     tags:
     - name: latest
@@ -50,7 +50,7 @@ parameters:
   description: The URL of the repository with your application source code.
   displayName: Git repository URI
   required: true
-  value: https://github.com/ManageIQ/topological_inventory-collector-mock
+  value: https://github.com/ManageIQ/topological_inventory-mock_source
 - name: SOURCE_REPOSITORY_REF
   description: Git repository branch to check out, if different from default
   displayName: Git Reference
